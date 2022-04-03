@@ -40,7 +40,7 @@ public abstract class SaveToDocDatabase extends RoomDatabase {
 
                         INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
 
-                                SaveToDocDatabase.class, "MyDatabaseToDoc.db")
+                                SaveToDocDatabase.class, "MyDatabaseToDoc1.db")
 
                                 .addCallback(prepopulateDatabase())
 
@@ -65,14 +65,11 @@ public abstract class SaveToDocDatabase extends RoomDatabase {
 
                     super.onCreate(db);
 
-                    Executors.newSingleThreadExecutor().execute(() -> INSTANCE.projectDao().createProject(new Project(1L, "Projet Test", 0xFFEADAD1)));
-
+                    Executors.newSingleThreadExecutor().execute(() -> INSTANCE.projectDao().createProject(new Project(1L, "Projet Tartampion", 0xFFEADAD1)));
+                    Executors.newSingleThreadExecutor().execute(() -> INSTANCE.projectDao().createProject(new Project(2L, "Projet Lucidia", 0xFFB4CDBA)));
+                    Executors.newSingleThreadExecutor().execute(() -> INSTANCE.projectDao().createProject(new Project(3L, "Projet Circus", 0xFFA3CED2)));
                 }
 
             };
-
         }
-
-
-
 }

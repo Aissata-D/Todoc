@@ -155,18 +155,20 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         } else if (id == R.id.filter_recent_first) {
             sortMethod = SortMethod.RECENT_FIRST;
         }
-
-        updateTasks();
+        //adapter.updateTasks(tasksFromDataBase);
+        //updateTasks();
+        initData();
 
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onDeleteTask(Task task) {
+        initData();
         tasks.remove(task);
         taskViewModel.deleteTask(task.getId());
-        //initData();
-        updateTasks();
+        initData();
+        //updateTasks();
     }
 
     /**
@@ -193,6 +195,13 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             // If both project and name of the task have been set
             else if (taskProject != null) {
 
+                /**
+                 * insert new task in a database
+                 */
+                taskViewModel.createTask(
+                        taskProject.getId(),
+                        taskName,
+                        new Date().getTime());
                 // TODO: Replace this by id of persisted task
                long id = (long) (Math.random() * 50000);
                 //long id = tasks.size() + 1;
@@ -206,13 +215,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                 );
 
                 addTask(task);
-                /**
-                 * insert new task in a database
-                 */
-                taskViewModel.createTask(id,
-                        taskProject.getId(),
-                        taskName,
-                        new Date().getTime());
+
 
 
                 dialogInterface.dismiss();
@@ -257,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * Updates the list of tasks in the UI
      */
     private void updateTasks() {
-        if (tasks.size() == 0) {
+       /* if (tasks.size() == 0) {
             lblNoTasks.setVisibility(View.VISIBLE);
             listTasks.setVisibility(View.GONE);
         } else {
@@ -280,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             }
             initData();
             //adapter.updateTasks(tasks);
-        }
+        }*/
     }
 
     /**
@@ -383,13 +386,38 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     private void initData() {
         taskViewModel.getAllTask().observe(this, new Observer<List<Task>>() {
             @Override
-            public void onChanged(List<Task> tasks) {
+            public void onChanged(List<Task> tasksFromDataBase) {
                 // adapter = new TasksAdapter(tasks, this);
-                adapter.updateTasks(tasks);
+                adapter.updateTasks(tasksFromDataBase);
+                tasks = tasksFromDataBase;
+                if (tasksFromDataBase.size() == 0) {
+                    lblNoTasks.setVisibility(View.VISIBLE);
+                    listTasks.setVisibility(View.GONE);
+                } else {
+                    lblNoTasks.setVisibility(View.GONE);
+                    listTasks.setVisibility(View.VISIBLE);
+                    switch (sortMethod) {
+                        case ALPHABETICAL:
+                            Collections.sort(tasksFromDataBase, new Task.TaskAZComparator());
+                            break;
+                        case ALPHABETICAL_INVERTED:
+                            Collections.sort(tasksFromDataBase, new Task.TaskZAComparator());
+                            break;
+                        case RECENT_FIRST:
+                            Collections.sort(tasksFromDataBase, new Task.TaskRecentComparator());
+                            break;
+                        case OLD_FIRST:
+                            Collections.sort(tasksFromDataBase, new Task.TaskOldComparator());
+                            break;
+
+                    }
+                }
+
 
             }
         });
-       // if(tasks == null) {
+
+        // if(tasks == null) {
          //   tasks = new ArrayList<>();
         //}
 
