@@ -1,16 +1,5 @@
 package com.cleanup.todoc;
-/*
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.widget.RecyclerView;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-*/
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,8 +8,14 @@ import com.cleanup.todoc.ui.MainActivity;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-
+/*
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+*/
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
@@ -45,7 +40,14 @@ import androidx.test.runner.AndroidJUnit4;
 public class MainActivityInstrumentedTest {
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
+    // Context of the app under test.
+   // Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
+   // @Test
+    //public void testOpen() {
+      //  Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        //assertEquals("com.cleanup.todoc", appContext.getPackageName());
+    //}
     @Test
     public void addAndRemoveTask() {
         MainActivity activity = rule.getActivity();

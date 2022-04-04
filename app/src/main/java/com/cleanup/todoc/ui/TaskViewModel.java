@@ -75,7 +75,7 @@ public class TaskViewModel extends ViewModel {
 
     }
 
-    public LiveData<List<Task>> getTask(long projectId) {
+    public LiveData<Task> getTask(long projectId) {
 
         return taskDataRepository.getTask(projectId);
 

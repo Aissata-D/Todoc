@@ -20,8 +20,8 @@ public interface TaskDao {
     LiveData<List<Task>> getAllTask();
 
     //Get all Task like a LiveData
-    @Query("SELECT * FROM Task WHERE projectId = :projectId")
-    LiveData<List<Task>> getTask(long projectId);
+    @Query("SELECT * FROM Task WHERE id = :id")
+    LiveData<Task> getTask(long id);
 
     //Get all Task like a Cursur
     @Query("SELECT * FROM Task WHERE projectId = :projectId")

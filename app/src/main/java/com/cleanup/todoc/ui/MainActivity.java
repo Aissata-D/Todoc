@@ -39,48 +39,42 @@ import java.util.List;
  * @author Gaëtan HERFRAY
  */
 public class MainActivity extends AppCompatActivity implements TasksAdapter.DeleteTaskListener {
-    /**
-     * List of all projects available in the application
-     */
-    private final Project[] allProjects = Project.getAllProjects();
+    private static final int USER_ID = 1;
 
     /**
      * FOR THE ViewModel
      */
     /**
-     *  1 - FOR DATABASE
+     * List of all projects available in the application
      */
-
-    private TaskViewModel taskViewModel;
+    private final Project[] allProjects = Project.getAllProjects();
 
     // private TasksAdapter adapter;
-
-    private static final int USER_ID = 1;
-
-    /**
-     * List of all current tasks of the application
-     */
-
-    @NonNull
-    private  List<Task> tasks ;//= new ArrayList<>() ;//taskViewModel.getAllTask();
-
-    /**
-     * The adapter which handles the list of tasks
-     */
-    private TasksAdapter adapter ;//= new TasksAdapter(tasks, this);
-
-    /**
-     * The sort method to be used to display tasks
-     */
-    @NonNull
-    private SortMethod sortMethod = SortMethod.NONE;
-
     /**
      * Dialog to create a new task
      */
     @Nullable
     public AlertDialog dialog = null;
+    /**
+     * 1 - FOR DATABASE
+     */
 
+    private TaskViewModel taskViewModel;
+    /**
+     * List of all current tasks of the application
+     */
+
+    @NonNull
+    private List<Task> tasks;//= new ArrayList<>() ;//taskViewModel.getAllTask();
+    /**
+     * The adapter which handles the list of tasks
+     */
+    private TasksAdapter adapter;//= new TasksAdapter(tasks, this);
+    /**
+     * The sort method to be used to display tasks
+     */
+    @NonNull
+    private SortMethod sortMethod = SortMethod.NONE;
     /**
      * EditText that allows user to set the name of a task
      */
@@ -108,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     @SuppressWarnings("NullableProblems")
     @NonNull
     private TextView lblNoTasks;
-
 
 
     @Override
@@ -203,9 +196,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                         taskName,
                         new Date().getTime());
                 // TODO: Replace this by id of persisted task
-               long id = (long) (Math.random() * 50000);
+                long id = (long) (Math.random() * 50000);
                 //long id = tasks.size() + 1;
-              //  long id = getCurrentProject().get
+                //  long id = getCurrentProject().get
 
                 Task task = new Task(
                         id,
@@ -217,11 +210,10 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                 addTask(task);
 
 
-
                 dialogInterface.dismiss();
             }
             // If name has been set, but project has not been set (this should never occur)
-            else{
+            else {
                 dialogInterface.dismiss();
             }
         }
@@ -253,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     private void addTask(@NonNull Task task) {
         tasks.add(task);
         initData();
-       // updateTasks();
+        // updateTasks();
     }
 
     /**
@@ -341,37 +333,10 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     }
 
     /**
-     * List of all possible sort methods for task
-     */
-    private enum SortMethod {
-        /**
-         * Sort alphabetical by name
-         */
-        ALPHABETICAL,
-        /**
-         * Inverted sort alphabetical by name
-         */
-        ALPHABETICAL_INVERTED,
-        /**
-         * Lastly created first
-         */
-        RECENT_FIRST,
-        /**
-         * First created first
-         */
-        OLD_FIRST,
-        /**
-         * No sort
-         */
-        NONE
-    }
-
-    /**
      * Get and Initialise ViewModel
      */
 
     // 2 - Configuring ViewModel
-
     private void configureViewModel() {
 
         this.taskViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this)).get(TaskViewModel.class);
@@ -380,8 +345,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
 
     }
-
-    // 3 - Get Current User
 
     private void initData() {
         taskViewModel.getAllTask().observe(this, new Observer<List<Task>>() {
@@ -416,26 +379,33 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
             }
         });
+    }
 
-        // if(tasks == null) {
-         //   tasks = new ArrayList<>();
-        //}
+    // 3 - Get Current User
 
-       // LiveData<Project> projectLiveData = taskViewModel.getProject();
-
-       // if (projectLiveData != null) {
-
-         //   projectLiveData.observe(this, this::updateView);
-
-        //}
-        /*  AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                //Perform your Room database operations
-                tasks = taskViewModel.getAllTask();
-            }
-        });*/
-
-
+    /**
+     * List of all possible sort methods for task
+     */
+    private enum SortMethod {
+        /**
+         * Sort alphabetical by name
+         */
+        ALPHABETICAL,
+        /**
+         * Inverted sort alphabetical by name
+         */
+        ALPHABETICAL_INVERTED,
+        /**
+         * Lastly created first
+         */
+        RECENT_FIRST,
+        /**
+         * First created first
+         */
+        OLD_FIRST,
+        /**
+         * No sort
+         */
+        NONE
     }
 }
