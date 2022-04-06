@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 31
@@ -9,11 +10,14 @@ android {
         versionCode 1
         versionName "1.0"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData:'true'
     }
     buildTypes {
         release {
-            minifyEnabled false
+            // Pour obscurcir le code release mettre le   minifyEnabled à true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
         }
@@ -26,25 +30,16 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+   testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
     }//END
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    //implementation 'androidx.test:core:1.4.0'
-
-    //testImplementation 'junit:junit:4.13.2'
-
-    //androidTestImplementation 'com.android.support.test:runner:0.5'
-    //androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
-    //androidTestImplementation 'junit:junit:4.12'
-    //androidTestImplementation 'com.android.support.test:rules:0.5'
-
-    //implementation 'com.android.support:recyclerview-v7'
-
-    //implementation 'com.google.android.material:material:1.4.0'
-
-   // implementation 'androidx.appcompat:appcompat:1.3.1'
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestUtil 'androidx.test:orchestrator:1.4.1'
 
     // NEW aissata
     implementation 'androidx.appcompat:appcompat:1.4.1'

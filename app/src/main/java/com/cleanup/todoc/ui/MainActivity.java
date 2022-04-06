@@ -191,17 +191,17 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                 /**
                  * insert new task in a database
                  */
-                taskViewModel.createTask(
+               /* taskViewModel.createTask(
                         taskProject.getId(),
                         taskName,
-                        new Date().getTime());
+                        new Date().getTime());*/
                 // TODO: Replace this by id of persisted task
-                long id = (long) (Math.random() * 50000);
+                //long id = (long) (Math.random() * 50000);
                 //long id = tasks.size() + 1;
                 //  long id = getCurrentProject().get
 
                 Task task = new Task(
-                        id,
+                        0,
                         taskProject.getId(),
                         taskName,
                         new Date().getTime()
@@ -243,7 +243,11 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * @param task the task to be added to the list
      */
     private void addTask(@NonNull Task task) {
-        tasks.add(task);
+       // tasks.add(task);
+        /**
+         * insert new task in a database
+         */
+        taskViewModel.createTask(task);
         initData();
         // updateTasks();
     }

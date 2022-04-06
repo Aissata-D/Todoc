@@ -40,19 +40,13 @@ import androidx.test.runner.AndroidJUnit4;
 public class MainActivityInstrumentedTest {
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
-    // Context of the app under test.
-   // Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-   // @Test
-    //public void testOpen() {
-      //  Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        //assertEquals("com.cleanup.todoc", appContext.getPackageName());
-    //}
     @Test
     public void addAndRemoveTask() {
         MainActivity activity = rule.getActivity();
         TextView lblNoTask = activity.findViewById(R.id.lbl_no_task);
         RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
+        // ADD AISSATA
 
         onView(withId(R.id.fab_add_task)).perform(click());
         onView(withId(R.id.txt_task_name)).perform(replaceText("Tâche example"));

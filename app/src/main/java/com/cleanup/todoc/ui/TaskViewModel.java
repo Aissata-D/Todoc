@@ -81,11 +81,11 @@ public class TaskViewModel extends ViewModel {
 
     }
 
-    public void createTask( long projectId, String name, long creationTimestamp) {
+    public void createTask( Task task) {
 
         executor.execute(() -> {
 
-            taskDataRepository.createTask(new Task( 0,projectId, name,creationTimestamp));
+            taskDataRepository.createTask(task);
 
         });
 

@@ -29,11 +29,9 @@ public class ProjectAndTaskDaoTest {
         private SaveToDocDatabase database;
 
         @Rule
-
         public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
         @Before
-
         public void initDb() throws Exception {
 
             this.database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
@@ -47,7 +45,6 @@ public class ProjectAndTaskDaoTest {
         }
 
         @After
-
         public void closeDb() throws Exception {
 
             database.close();
@@ -55,27 +52,28 @@ public class ProjectAndTaskDaoTest {
         }
 
         //TEST
-        private static long PROJECT_ID = 5;
+        private static long PROJECT_ID = 5L;
+    private static long TASK_ID = 55L;
 
         private static Project PROJECT_DEMO = new Project(PROJECT_ID, "Test BDD Project",0xFFA3CED2);
-        private static Task TASK_DEMO = new Task(55, PROJECT_ID,"Test BDD TASK",new Date().getTime());
+        private static Task TASK_DEMO = new Task(TASK_ID, PROJECT_ID,"Test BDD TASK",new Date().getTime());
 
         @Test
 
-        public void insertProject() throws InterruptedException {
+        public void insertProjectAndTask() throws InterruptedException {
 
                 // BEFORE : Adding a new task
 
                 this.database.projectDao().createProject(PROJECT_DEMO);
                 this.database.taskDao().insertTask(TASK_DEMO);
 
-                // TEST
-                // Get PROJECT_DEMO
+                // TEST Insert Project and Task
+                // Get PROJECT_DEMO and TASK_DEMO
 
                 Project project = LiveDataTestUtil.getValue(this.database.projectDao().getProject (PROJECT_ID));
-               Task task = LiveDataTestUtil.getValue(this.database.taskDao().getTask (55));
+                Task task = LiveDataTestUtil.getValue(this.database.taskDao().getTask (TASK_ID));
 
-                assertTrue(task.getName().equals(TASK_DEMO.getName()) && task.getId() == 55);
+                assertTrue(task.getName().equals(TASK_DEMO.getName()) && task.getId() == TASK_ID);
 
                 assertTrue(project.getName().equals(PROJECT_DEMO.getName()) && project.getId() == PROJECT_ID);
 
