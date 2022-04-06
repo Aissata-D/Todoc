@@ -20,20 +20,13 @@ public interface TaskDao {
     LiveData<List<Task>> getAllTask();
 
     //Get all Task like a LiveData
-    @Query("SELECT * FROM Task WHERE id = :id")
-    LiveData<Task> getTask(long id);
-
-    //Get all Task like a Cursur
-    @Query("SELECT * FROM Task WHERE projectId = :projectId")
-    Cursor getTaskWithCursor(long projectId);
+    @Query("SELECT * FROM Task WHERE id = :taskId")
+    LiveData<Task> getTask(long taskId);
 
     // Insert a new Task
     @Insert
     long insertTask(Task task);
 
-    //Update a Task
-    @Update
-    int updateTask(Task task);
 
     //Delete a Task
     @Query("DELETE FROM Task WHERE id = :taskId")
